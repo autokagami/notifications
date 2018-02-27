@@ -1098,28 +1098,33 @@ method, when invoked, must run these steps:
 method, when invoked, must run these steps:
 
 <ol>
-  <li><p>Let <var>promise</var> be a new promise.
+ <li><p>Let <var>promise</var> be a new promise.
 
-  <li><p>Run these steps <a>in parallel</a>:
+ <li>
+  <p>Run these steps <a>in parallel</a>:
 
   <ol>
-    <li><p>Let <var>tag</var> be <var>filter</var>'s <code>tag</code>.
+   <li><p>Let <var>tag</var> be <var>filter</var>'s <code>tag</code>.
 
-    <li><p>Let <var>notifications</var> be a <a for=/>list</a> of all <a>notifications</a> in the
-    <a>list of notifications</a> whose <a for=notification>origin</a> is the
-    <a>entry settings object</a>'s <a for="environment settings object">origin</a>, whose
-    <a for=notification>service worker registration</a> is the <a>context object</a>, and whose
-    <a for=notification>tag</a>, if <var>tag</var> is not the empty string, is <var>tag</var>.
+   <li><p>Let <var>notifications</var> be a <a for=/>list</a> of all <a>notifications</a> in the
+   <a>list of notifications</a> whose <a for=notification>origin</a> is the
+   <a>entry settings object</a>'s <a for="environment settings object">origin</a>, whose
+   <a for=notification>service worker registration</a> is the <a>context object</a>, and whose
+   <a for=notification>tag</a>, if <var>tag</var> is not the empty string, is <var>tag</var>.
 
-    <li><p>Let <var>objects</var> be an empty JavaScript array.
+   <li>
+    <p><a>Queue a task</a> to run these steps:</p>
 
-    <li><p><a for=list>For each</a> <a>notification</a> in
-    <var>notifications</var>, in creation order, create a new {{Notification}}
-    object representing <a>notification</a> and push
-    that object to <var>objects</var>.
+    <ol>
+     <li><p>Let <var>objects</var> be a <a for=/>list</a>.
 
-    <li><p>Resolve <var>promise</var> with <var>objects</var>.
-  </ol>
+     <li><p><a for=list>For each</a> <a>notification</a> in <var>notifications</var>, in creation
+     order, create a new {{Notification}} object representing <a>notification</a> and
+     <a for=list>append</a> it to <var>objects</var>.
+
+     <li><p>Resolve <var>promise</var> with <var>objects</var>.
+    </ol>
+   </ol>
 
   <li><p>Return <var>promise</var>.
 </ol>
